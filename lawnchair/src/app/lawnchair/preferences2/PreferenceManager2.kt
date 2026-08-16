@@ -666,6 +666,11 @@ class PreferenceManager2 private constructor(private val context: Context) : Pre
         defaultValue = GestureHandlerConfig.NoOp,
     )
 
+    val numpadToDialer = preference(
+        key = booleanPreferencesKey(name = "numpad_to_dialer"),
+        defaultValue = false,
+    )
+
     private inline fun <reified T> serializablePreference(
         key: Preferences.Key<String>,
         defaultValue: T,

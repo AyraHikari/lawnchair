@@ -381,12 +381,44 @@ class LawnchairLauncher : QuickstepLauncher() {
         )
     }
 
+    private fun keyCodeToDigit(keyCode: Int): String? {
+        return when (keyCode) {
+            android.view.KeyEvent.KEYCODE_0, android.view.KeyEvent.KEYCODE_NUMPAD_0 -> "0"
+            android.view.KeyEvent.KEYCODE_1, android.view.KeyEvent.KEYCODE_NUMPAD_1 -> "1"
+            android.view.KeyEvent.KEYCODE_2, android.view.KeyEvent.KEYCODE_NUMPAD_2 -> "2"
+            android.view.KeyEvent.KEYCODE_3, android.view.KeyEvent.KEYCODE_NUMPAD_3 -> "3"
+            android.view.KeyEvent.KEYCODE_4, android.view.KeyEvent.KEYCODE_NUMPAD_4 -> "4"
+            android.view.KeyEvent.KEYCODE_5, android.view.KeyEvent.KEYCODE_NUMPAD_5 -> "5"
+            android.view.KeyEvent.KEYCODE_6, android.view.KeyEvent.KEYCODE_NUMPAD_6 -> "6"
+            android.view.KeyEvent.KEYCODE_7, android.view.KeyEvent.KEYCODE_NUMPAD_7 -> "7"
+            android.view.KeyEvent.KEYCODE_8, android.view.KeyEvent.KEYCODE_NUMPAD_8 -> "8"
+            android.view.KeyEvent.KEYCODE_9, android.view.KeyEvent.KEYCODE_NUMPAD_9 -> "9"
+            android.view.KeyEvent.KEYCODE_STAR, android.view.KeyEvent.KEYCODE_NUMPAD_MULTIPLY -> "*"
+            android.view.KeyEvent.KEYCODE_POUND, android.view.KeyEvent.KEYCODE_NUMPAD_ADD -> "#"
+            else -> null
+        }
+    }
+
     override fun dispatchKeyEvent(event: android.view.KeyEvent): Boolean {
         if (event.action == android.view.KeyEvent.ACTION_DOWN && isNumpadKey(event.keyCode)) {
             // Ignore auto-repeat events (key held down) — only trigger on first press
             if (event.repeatCount > 0) {
                 return true
             }
+
+            // Numpad to dialer mode: open dialer on short press
+            if (preferenceManager2.numpadToDialer.firstBlocking()) {
+                val digit = keyCodeToDigit(event.keyCode)
+                if (digit != null) {
+                    val intent = android.content.Intent(android.content.Intent.ACTION_DIAL).apply {
+                        data = android.net.Uri.parse("tel:${digit}")
+                        addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
+                    }
+                    startActivity(intent)
+                }
+                return true
+            }
+
             // Cancel any existing pending long-press for a different key
             pendingNumpadLongPress?.let {
                 numpadLongPressHandler.removeCallbacks(it)

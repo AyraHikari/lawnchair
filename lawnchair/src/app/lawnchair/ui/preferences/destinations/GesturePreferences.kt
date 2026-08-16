@@ -7,6 +7,7 @@ import app.lawnchair.preferences.getAdapter
 import app.lawnchair.preferences2.preferenceManager2
 import app.lawnchair.ui.preferences.LocalIsExpandedScreen
 import app.lawnchair.ui.preferences.components.GestureHandlerPreference
+import app.lawnchair.ui.preferences.components.controls.SwitchPreference
 import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import com.android.launcher3.R
@@ -22,6 +23,11 @@ fun GesturePreferences(
         modifier = modifier,
     ) {
         PreferenceGroup {
+            SwitchPreference(
+                adapter = prefs.numpadToDialer.getAdapter(),
+                label = stringResource(id = R.string.numpad_to_dialer_label),
+                description = stringResource(id = R.string.numpad_to_dialer_description),
+            )
             GestureHandlerPreference(
                 adapter = prefs.doubleTapGestureHandler.getAdapter(),
                 label = stringResource(id = R.string.gesture_double_tap),

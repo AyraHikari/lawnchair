@@ -474,6 +474,9 @@
     <string name="gesture_numpad_key_star">Long press key *</string>
     <string name="gesture_numpad_key_pound">Long press key #</string>
 
+    <string name="numpad_to_dialer_label">Numpad to dialer</string>
+    <string name="numpad_to_dialer_description">Pressing numpad keys opens the system dialer with the number</string>
+
     <string name="pick_app_for_gesture">Pick app</string>
 
     <string name="dt2s_admin_hint_title">Admin permissions required</string>

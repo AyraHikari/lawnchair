@@ -606,6 +606,66 @@ class PreferenceManager2 private constructor(private val context: Context) : Pre
         defaultValue = GestureHandlerConfig.NoOp,
     )
 
+    val numpadKey0GestureHandler = serializablePreference<GestureHandlerConfig>(
+        key = stringPreferencesKey("numpad_key_0_gesture_handler"),
+        defaultValue = GestureHandlerConfig.NoOp,
+    )
+
+    val numpadKey1GestureHandler = serializablePreference<GestureHandlerConfig>(
+        key = stringPreferencesKey("numpad_key_1_gesture_handler"),
+        defaultValue = GestureHandlerConfig.NoOp,
+    )
+
+    val numpadKey2GestureHandler = serializablePreference<GestureHandlerConfig>(
+        key = stringPreferencesKey("numpad_key_2_gesture_handler"),
+        defaultValue = GestureHandlerConfig.NoOp,
+    )
+
+    val numpadKey3GestureHandler = serializablePreference<GestureHandlerConfig>(
+        key = stringPreferencesKey("numpad_key_3_gesture_handler"),
+        defaultValue = GestureHandlerConfig.NoOp,
+    )
+
+    val numpadKey4GestureHandler = serializablePreference<GestureHandlerConfig>(
+        key = stringPreferencesKey("numpad_key_4_gesture_handler"),
+        defaultValue = GestureHandlerConfig.NoOp,
+    )
+
+    val numpadKey5GestureHandler = serializablePreference<GestureHandlerConfig>(
+        key = stringPreferencesKey("numpad_key_5_gesture_handler"),
+        defaultValue = GestureHandlerConfig.NoOp,
+    )
+
+    val numpadKey6GestureHandler = serializablePreference<GestureHandlerConfig>(
+        key = stringPreferencesKey("numpad_key_6_gesture_handler"),
+        defaultValue = GestureHandlerConfig.NoOp,
+    )
+
+    val numpadKey7GestureHandler = serializablePreference<GestureHandlerConfig>(
+        key = stringPreferencesKey("numpad_key_7_gesture_handler"),
+        defaultValue = GestureHandlerConfig.NoOp,
+    )
+
+    val numpadKey8GestureHandler = serializablePreference<GestureHandlerConfig>(
+        key = stringPreferencesKey("numpad_key_8_gesture_handler"),
+        defaultValue = GestureHandlerConfig.NoOp,
+    )
+
+    val numpadKey9GestureHandler = serializablePreference<GestureHandlerConfig>(
+        key = stringPreferencesKey("numpad_key_9_gesture_handler"),
+        defaultValue = GestureHandlerConfig.NoOp,
+    )
+
+    val numpadKeyStarGestureHandler = serializablePreference<GestureHandlerConfig>(
+        key = stringPreferencesKey("numpad_key_star_gesture_handler"),
+        defaultValue = GestureHandlerConfig.NoOp,
+    )
+
+    val numpadKeyPoundGestureHandler = serializablePreference<GestureHandlerConfig>(
+        key = stringPreferencesKey("numpad_key_pound_gesture_handler"),
+        defaultValue = GestureHandlerConfig.NoOp,
+    )
+
     private inline fun <reified T> serializablePreference(
         key: Preferences.Key<String>,
         defaultValue: T,

@@ -59,6 +59,28 @@ jobs:
           name: Debug APK
           path: build/outputs/apk/**/*.apk
 
+  build-release-no-sign:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          cache-encryption-key: Da25KUVSE5jbGds2zXmfXw==
+      - name: Build release APK (unsigned)
+        run: ./gradlew assembleLawnWithQuickstepGithubRelease
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Release APK (unsigned)
+          path: build/outputs/apk/**/*.apk
+
   check-style:
     runs-on: ubuntu-latest
     steps:

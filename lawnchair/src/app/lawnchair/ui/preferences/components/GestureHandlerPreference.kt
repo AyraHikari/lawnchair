@@ -32,6 +32,9 @@ val options = listOf(
     GestureHandlerOption.OpenAppSearch,
     GestureHandlerOption.OpenSearch,
     GestureHandlerOption.OpenApp,
+    GestureHandlerOption.ToggleTorch,
+    GestureHandlerOption.ToggleDnd,
+    GestureHandlerOption.ToggleSilentMode,
 )
 
 @Composable

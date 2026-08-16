@@ -443,6 +443,37 @@
     <string name="gesture_handler_open_app_search">Open app search</string>
     <string name="gesture_handler_open_search">Open search</string>
 
+    <string name="gesture_handler_toggle_torch">Toggle camera torch</string>
+    <string name="gesture_handler_toggle_dnd">Toggle Do Not Disturb</string>
+    <string name="gesture_handler_toggle_silent_mode">Toggle silent mode</string>
+
+    <string name="gesture_handler_torch_enabled">Torch enabled</string>
+    <string name="gesture_handler_torch_disabled">Torch disabled</string>
+    <string name="gesture_handler_torch_no_camera">No camera found</string>
+    <string name="gesture_handler_torch_no_support">Torch not supported</string>
+    <string name="gesture_handler_torch_error">Failed to toggle torch</string>
+    <string name="gesture_handler_dnd_enabled">Do Not Disturb enabled</string>
+    <string name="gesture_handler_dnd_disabled">Do Not Disturb disabled</string>
+    <string name="gesture_handler_dnd_access_required">Notification policy access required. Opening settings…</string>
+    <string name="gesture_handler_dnd_not_supported">Do Not Disturb not supported on this device</string>
+    <string name="gesture_handler_silent_enabled">Silent mode enabled</string>
+    <string name="gesture_handler_silent_disabled">Silent mode disabled</string>
+
+    <string name="gestures_numpad_long_press_label">Numpad long-press</string>
+    <string name="gestures_numpad_long_press_description">Assign actions to long-pressing numpad keys</string>
+    <string name="gesture_numpad_key_0">Long press key 0</string>
+    <string name="gesture_numpad_key_1">Long press key 1</string>
+    <string name="gesture_numpad_key_2">Long press key 2</string>
+    <string name="gesture_numpad_key_3">Long press key 3</string>
+    <string name="gesture_numpad_key_4">Long press key 4</string>
+    <string name="gesture_numpad_key_5">Long press key 5</string>
+    <string name="gesture_numpad_key_6">Long press key 6</string>
+    <string name="gesture_numpad_key_7">Long press key 7</string>
+    <string name="gesture_numpad_key_8">Long press key 8</string>
+    <string name="gesture_numpad_key_9">Long press key 9</string>
+    <string name="gesture_numpad_key_star">Long press key *</string>
+    <string name="gesture_numpad_key_pound">Long press key #</string>
+
     <string name="pick_app_for_gesture">Pick app</string>
 
     <string name="dt2s_admin_hint_title">Admin permissions required</string>

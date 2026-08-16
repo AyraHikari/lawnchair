@@ -7,6 +7,7 @@ import app.lawnchair.preferences.getAdapter
 import app.lawnchair.preferences2.preferenceManager2
 import app.lawnchair.ui.preferences.LocalIsExpandedScreen
 import app.lawnchair.ui.preferences.components.GestureHandlerPreference
+import app.lawnchair.ui.preferences.components.controls.PreferenceCategory
 import app.lawnchair.ui.preferences.components.layout.PreferenceGroup
 import app.lawnchair.ui.preferences.components.layout.PreferenceLayout
 import com.android.launcher3.R
@@ -41,6 +42,59 @@ fun GesturePreferences(
             GestureHandlerPreference(
                 adapter = prefs.backPressGestureHandler.getAdapter(),
                 label = stringResource(id = R.string.gesture_back_tap),
+            )
+        }
+        PreferenceGroup {
+            PreferenceCategory(
+                label = stringResource(id = R.string.gestures_numpad_long_press_label),
+            )
+            GestureHandlerPreference(
+                adapter = prefs.numpadKey0GestureHandler.getAdapter(),
+                label = stringResource(id = R.string.gesture_numpad_key_0),
+            )
+            GestureHandlerPreference(
+                adapter = prefs.numpadKey1GestureHandler.getAdapter(),
+                label = stringResource(id = R.string.gesture_numpad_key_1),
+            )
+            GestureHandlerPreference(
+                adapter = prefs.numpadKey2GestureHandler.getAdapter(),
+                label = stringResource(id = R.string.gesture_numpad_key_2),
+            )
+            GestureHandlerPreference(
+                adapter = prefs.numpadKey3GestureHandler.getAdapter(),
+                label = stringResource(id = R.string.gesture_numpad_key_3),
+            )
+            GestureHandlerPreference(
+                adapter = prefs.numpadKey4GestureHandler.getAdapter(),
+                label = stringResource(id = R.string.gesture_numpad_key_4),
+            )
+            GestureHandlerPreference(
+                adapter = prefs.numpadKey5GestureHandler.getAdapter(),
+                label = stringResource(id = R.string.gesture_numpad_key_5),
+            )
+            GestureHandlerPreference(
+                adapter = prefs.numpadKey6GestureHandler.getAdapter(),
+                label = stringResource(id = R.string.gesture_numpad_key_6),
+            )
+            GestureHandlerPreference(
+                adapter = prefs.numpadKey7GestureHandler.getAdapter(),
+                label = stringResource(id = R.string.gesture_numpad_key_7),
+            )
+            GestureHandlerPreference(
+                adapter = prefs.numpadKey8GestureHandler.getAdapter(),
+                label = stringResource(id = R.string.gesture_numpad_key_8),
+            )
+            GestureHandlerPreference(
+                adapter = prefs.numpadKey9GestureHandler.getAdapter(),
+                label = stringResource(id = R.string.gesture_numpad_key_9),
+            )
+            GestureHandlerPreference(
+                adapter = prefs.numpadKeyStarGestureHandler.getAdapter(),
+                label = stringResource(id = R.string.gesture_numpad_key_star),
+            )
+            GestureHandlerPreference(
+                adapter = prefs.numpadKeyPoundGestureHandler.getAdapter(),
+                label = stringResource(id = R.string.gesture_numpad_key_pound),
             )
         }
     }

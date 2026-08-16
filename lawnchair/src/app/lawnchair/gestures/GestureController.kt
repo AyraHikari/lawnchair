@@ -64,6 +64,37 @@ class GestureController(private val launcher: LawnchairLauncher) {
         triggerHandler(backPressHandler, false)
     }
 
+    fun onNumpadKeyLongPress(keyCode: Int) {
+        val handler = when (keyCode) {
+            android.view.KeyEvent.KEYCODE_NUMPAD_0 -> handler(prefs.numpadKey0GestureHandler)
+            android.view.KeyEvent.KEYCODE_NUMPAD_1 -> handler(prefs.numpadKey1GestureHandler)
+            android.view.KeyEvent.KEYCODE_NUMPAD_2 -> handler(prefs.numpadKey2GestureHandler)
+            android.view.KeyEvent.KEYCODE_NUMPAD_3 -> handler(prefs.numpadKey3GestureHandler)
+            android.view.KeyEvent.KEYCODE_NUMPAD_4 -> handler(prefs.numpadKey4GestureHandler)
+            android.view.KeyEvent.KEYCODE_NUMPAD_5 -> handler(prefs.numpadKey5GestureHandler)
+            android.view.KeyEvent.KEYCODE_NUMPAD_6 -> handler(prefs.numpadKey6GestureHandler)
+            android.view.KeyEvent.KEYCODE_NUMPAD_7 -> handler(prefs.numpadKey7GestureHandler)
+            android.view.KeyEvent.KEYCODE_NUMPAD_8 -> handler(prefs.numpadKey8GestureHandler)
+            android.view.KeyEvent.KEYCODE_NUMPAD_9 -> handler(prefs.numpadKey9GestureHandler)
+            android.view.KeyEvent.KEYCODE_NUMPAD_MULTIPLY -> handler(prefs.numpadKeyStarGestureHandler)
+            android.view.KeyEvent.KEYCODE_NUMPAD_ADD -> handler(prefs.numpadKeyPoundGestureHandler)
+            android.view.KeyEvent.KEYCODE_STAR -> handler(prefs.numpadKeyStarGestureHandler)
+            android.view.KeyEvent.KEYCODE_POUND -> handler(prefs.numpadKeyPoundGestureHandler)
+            android.view.KeyEvent.KEYCODE_0 -> handler(prefs.numpadKey0GestureHandler)
+            android.view.KeyEvent.KEYCODE_1 -> handler(prefs.numpadKey1GestureHandler)
+            android.view.KeyEvent.KEYCODE_2 -> handler(prefs.numpadKey2GestureHandler)
+            android.view.KeyEvent.KEYCODE_3 -> handler(prefs.numpadKey3GestureHandler)
+            android.view.KeyEvent.KEYCODE_4 -> handler(prefs.numpadKey4GestureHandler)
+            android.view.KeyEvent.KEYCODE_5 -> handler(prefs.numpadKey5GestureHandler)
+            android.view.KeyEvent.KEYCODE_6 -> handler(prefs.numpadKey6GestureHandler)
+            android.view.KeyEvent.KEYCODE_7 -> handler(prefs.numpadKey7GestureHandler)
+            android.view.KeyEvent.KEYCODE_8 -> handler(prefs.numpadKey8GestureHandler)
+            android.view.KeyEvent.KEYCODE_9 -> handler(prefs.numpadKey9GestureHandler)
+            else -> return
+        }
+        triggerHandler(handler)
+    }
+
     private fun triggerHandler(handlerFlow: Flow<GestureHandler>, withHaptic: Boolean = true) {
         launcher.lifecycleScope.launch {
             val handler = handlerFlow.first()

@@ -349,6 +349,59 @@ class LawnchairLauncher : QuickstepLauncher() {
         SmartspacerClient.close()
     }
 
+    private val numpadLongPressHandler = android.os.Handler(android.os.Looper.getMainLooper())
+    private var pendingNumpadLongPress: Runnable? = null
+    private var pendingNumpadKeyCode: Int = 0
+    private val isNumpadKey: (Int) -> Boolean = { code ->
+        code in listOf(
+            android.view.KeyEvent.KEYCODE_NUMPAD_0,
+            android.view.KeyEvent.KEYCODE_NUMPAD_1,
+            android.view.KeyEvent.KEYCODE_NUMPAD_2,
+            android.view.KeyEvent.KEYCODE_NUMPAD_3,
+            android.view.KeyEvent.KEYCODE_NUMPAD_4,
+            android.view.KeyEvent.KEYCODE_NUMPAD_5,
+            android.view.KeyEvent.KEYCODE_NUMPAD_6,
+            android.view.KeyEvent.KEYCODE_NUMPAD_7,
+            android.view.KeyEvent.KEYCODE_NUMPAD_8,
+            android.view.KeyEvent.KEYCODE_NUMPAD_9,
+            android.view.KeyEvent.KEYCODE_NUMPAD_MULTIPLY,
+            android.view.KeyEvent.KEYCODE_NUMPAD_ADD,
+            android.view.KeyEvent.KEYCODE_STAR,
+            android.view.KeyEvent.KEYCODE_POUND,
+            android.view.KeyEvent.KEYCODE_0,
+            android.view.KeyEvent.KEYCODE_1,
+            android.view.KeyEvent.KEYCODE_2,
+            android.view.KeyEvent.KEYCODE_3,
+            android.view.KeyEvent.KEYCODE_4,
+            android.view.KeyEvent.KEYCODE_5,
+            android.view.KeyEvent.KEYCODE_6,
+            android.view.KeyEvent.KEYCODE_7,
+            android.view.KeyEvent.KEYCODE_8,
+            android.view.KeyEvent.KEYCODE_9,
+        )
+    }
+
+    override fun dispatchKeyEvent(event: android.view.KeyEvent): Boolean {
+        if (event.action == android.view.KeyEvent.ACTION_DOWN && isNumpadKey(event.keyCode)) {
+            val runnable = Runnable {
+                gestureController.onNumpadKeyLongPress(event.keyCode)
+                pendingNumpadLongPress = null
+            }
+            pendingNumpadLongPress = runnable
+            pendingNumpadKeyCode = event.keyCode
+            numpadLongPressHandler.postDelayed(runnable, android.view.ViewConfiguration.getLongPressTimeout().toLong())
+            return true
+        }
+        if (event.action == android.view.KeyEvent.ACTION_UP && event.keyCode == pendingNumpadKeyCode) {
+            pendingNumpadLongPress?.let {
+                numpadLongPressHandler.removeCallbacks(it)
+                pendingNumpadLongPress = null
+            }
+            return true
+        }
+        return super.dispatchKeyEvent(event)
+    }
+
     override fun getDefaultOverlay(): LauncherOverlayManager = defaultOverlay
 
     fun recreateIfNotScheduled() {

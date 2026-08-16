@@ -11,6 +11,9 @@ import app.lawnchair.gestures.handlers.OpenNotificationsHandler
 import app.lawnchair.gestures.handlers.OpenSearchGestureHandler
 import app.lawnchair.gestures.handlers.RecentsGestureHandler
 import app.lawnchair.gestures.handlers.SleepGestureHandler
+import app.lawnchair.gestures.handlers.ToggleDndGestureHandler
+import app.lawnchair.gestures.handlers.ToggleSilentModeGestureHandler
+import app.lawnchair.gestures.handlers.ToggleTorchGestureHandler
 import com.android.launcher3.R
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -67,4 +70,16 @@ sealed class GestureHandlerConfig {
         override fun getLabel(context: Context) = context.getString(R.string.gesture_handler_open_app_config, appName)
         override fun createHandler(context: Context) = OpenAppGestureHandler(context, target)
     }
+
+    @Serializable
+    @SerialName("toggleTorch")
+    data object ToggleTorch : Simple(R.string.gesture_handler_toggle_torch, ::ToggleTorchGestureHandler)
+
+    @Serializable
+    @SerialName("toggleDnd")
+    data object ToggleDnd : Simple(R.string.gesture_handler_toggle_dnd, ::ToggleDndGestureHandler)
+
+    @Serializable
+    @SerialName("toggleSilentMode")
+    data object ToggleSilentMode : Simple(R.string.gesture_handler_toggle_silent_mode, ::ToggleSilentModeGestureHandler)
 }

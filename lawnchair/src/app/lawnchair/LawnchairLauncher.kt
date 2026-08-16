@@ -352,6 +352,7 @@ class LawnchairLauncher : QuickstepLauncher() {
     private val numpadLongPressHandler = android.os.Handler(android.os.Looper.getMainLooper())
     private var pendingNumpadLongPress: Runnable? = null
     private var pendingNumpadKeyCode: Int = 0
+    private var pendingDialerEnabled: Boolean = false
     private val isNumpadKey: (Int) -> Boolean = { code ->
         code in listOf(
             android.view.KeyEvent.KEYCODE_NUMPAD_0,
@@ -406,31 +407,22 @@ class LawnchairLauncher : QuickstepLauncher() {
                 return true
             }
 
-            // Numpad to dialer mode: open dialer on short press
-            if (preferenceManager2.numpadToDialer.firstBlocking()) {
-                val digit = keyCodeToDigit(event.keyCode)
-                if (digit != null) {
-                    val intent = android.content.Intent(android.content.Intent.ACTION_DIAL).apply {
-                        data = android.net.Uri.parse("tel:${digit}")
-                        addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
-                    }
-                    startActivity(intent)
-                }
-                return true
-            }
-
             // Cancel any existing pending long-press for a different key
             pendingNumpadLongPress?.let {
                 numpadLongPressHandler.removeCallbacks(it)
                 pendingNumpadLongPress = null
             }
+
+            val dialerEnabled = preferenceManager2.numpadToDialer.firstBlocking()
             val keyCode = event.keyCode
             val runnable = Runnable {
+                // Long-press detected: fire gesture handler (always takes priority over dialer)
                 gestureController.onNumpadKeyLongPress(keyCode)
                 pendingNumpadLongPress = null
             }
             pendingNumpadLongPress = runnable
             pendingNumpadKeyCode = keyCode
+            pendingDialerEnabled = dialerEnabled
             numpadLongPressHandler.postDelayed(runnable, android.view.ViewConfiguration.getLongPressTimeout().toLong())
             return true
         }
@@ -439,7 +431,19 @@ class LawnchairLauncher : QuickstepLauncher() {
                 numpadLongPressHandler.removeCallbacks(it)
                 pendingNumpadLongPress = null
             }
+            // Short click: open dialer if enabled
+            if (pendingDialerEnabled) {
+                val digit = keyCodeToDigit(event.keyCode)
+                if (digit != null) {
+                    val intent = android.content.Intent(android.content.Intent.ACTION_DIAL).apply {
+                        data = android.net.Uri.parse("tel:$digit")
+                        addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
+                    }
+                    startActivity(intent)
+                }
+            }
             pendingNumpadKeyCode = 0
+            pendingDialerEnabled = false
             return true
         }
         return super.dispatchKeyEvent(event)

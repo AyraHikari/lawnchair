@@ -1272,6 +1272,11 @@ public class Launcher extends StatefulActivity<LauncherState>
 
             // Clear any rotation locks when going to normal state
             getRotationHelper().setCurrentStateRequest(REQUEST_NONE);
+
+            // Restore focus to workspace when returning from ALL_APPS
+            if (ALL_APPS.equals(mPrevLauncherState)) {
+                getWorkspace().post(getWorkspace()::moveToDefaultScreen);
+            }
         }
 
         if (ALL_APPS.equals(mPrevLauncherState) && !ALL_APPS.equals(state)

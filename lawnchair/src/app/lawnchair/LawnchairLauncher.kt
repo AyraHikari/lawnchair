@@ -416,9 +416,10 @@ class LawnchairLauncher : QuickstepLauncher() {
             val dialerEnabled = preferenceManager2.numpadToDialer.firstBlocking()
             val keyCode = event.keyCode
             val runnable = Runnable {
-                // Long-press detected: fire gesture handler (always takes priority over dialer)
+                // Long-press detected: fire gesture handler, suppress dialer
                 gestureController.onNumpadKeyLongPress(keyCode)
                 pendingNumpadLongPress = null
+                pendingDialerEnabled = false
             }
             pendingNumpadLongPress = runnable
             pendingNumpadKeyCode = keyCode

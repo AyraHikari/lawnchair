@@ -383,12 +383,22 @@ class LawnchairLauncher : QuickstepLauncher() {
 
     override fun dispatchKeyEvent(event: android.view.KeyEvent): Boolean {
         if (event.action == android.view.KeyEvent.ACTION_DOWN && isNumpadKey(event.keyCode)) {
+            // Ignore auto-repeat events (key held down) — only trigger on first press
+            if (event.repeatCount > 0) {
+                return true
+            }
+            // Cancel any existing pending long-press for a different key
+            pendingNumpadLongPress?.let {
+                numpadLongPressHandler.removeCallbacks(it)
+                pendingNumpadLongPress = null
+            }
+            val keyCode = event.keyCode
             val runnable = Runnable {
-                gestureController.onNumpadKeyLongPress(event.keyCode)
+                gestureController.onNumpadKeyLongPress(keyCode)
                 pendingNumpadLongPress = null
             }
             pendingNumpadLongPress = runnable
-            pendingNumpadKeyCode = event.keyCode
+            pendingNumpadKeyCode = keyCode
             numpadLongPressHandler.postDelayed(runnable, android.view.ViewConfiguration.getLongPressTimeout().toLong())
             return true
         }
@@ -397,6 +407,7 @@ class LawnchairLauncher : QuickstepLauncher() {
                 numpadLongPressHandler.removeCallbacks(it)
                 pendingNumpadLongPress = null
             }
+            pendingNumpadKeyCode = 0
             return true
         }
         return super.dispatchKeyEvent(event)

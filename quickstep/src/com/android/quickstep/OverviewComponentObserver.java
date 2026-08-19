@@ -82,10 +82,22 @@ public final class OverviewComponentObserver {
         mCurrentHomeIntent = createHomeIntent();
         mMyHomeIntent = new Intent(mCurrentHomeIntent).setPackage(mContext.getPackageName());
         ResolveInfo info = context.getPackageManager().resolveActivity(mMyHomeIntent, 0);
-        ComponentName myHomeComponent =
-                new ComponentName(context.getPackageName(), info.activityInfo.name);
-        mMyHomeIntent.setComponent(myHomeComponent);
-        mConfigChangesMap.append(myHomeComponent.hashCode(), info.activityInfo.configChanges);
+        if (info == null || info.activityInfo == null) {
+            Log.e(TAG, "Unable to resolve home activity, falling back to package manager query");
+            info = context.getPackageManager().resolveActivity(
+                    new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME), 0);
+        }
+        if (info == null || info.activityInfo == null) {
+            Log.e(TAG, "No home activity found at all, using default component");
+            ComponentName myHomeComponent = new ComponentName(context.getPackageName(),
+                    context.getPackageName() + ".launcher");
+            mMyHomeIntent.setComponent(myHomeComponent);
+        } else {
+            ComponentName myHomeComponent =
+                    new ComponentName(context.getPackageName(), info.activityInfo.name);
+            mMyHomeIntent.setComponent(myHomeComponent);
+            mConfigChangesMap.append(myHomeComponent.hashCode(), info.activityInfo.configChanges);
+        }
         mSetupWizardPkg = context.getString(R.string.setup_wizard_pkg);
 
         ComponentName fallbackComponent = new ComponentName(mContext, RecentsActivity.class);
